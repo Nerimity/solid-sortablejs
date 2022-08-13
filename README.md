@@ -13,7 +13,7 @@ This library is in WIP
 Install it:
 
 ```bash
-npm add solid-sortablejs
+npm install solid-sortablejs
 ```
 
 Use it:
