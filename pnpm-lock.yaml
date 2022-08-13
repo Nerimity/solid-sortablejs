@@ -1,16 +1,22 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/sortablejs': ^1.13.0
   prettier: 2.7.1
   rollup: ^2.77.2
   rollup-preset-solid: ^1.4.0
   solid-js: ^1.4.8
+  sortablejs: ^1.15.0
   taze: ^0.7.6
   typescript: ^4.7.4
   vite: ^3.0.4
   vite-plugin-solid: ^2.3.0
 
+dependencies:
+  sortablejs: 1.15.0
+
 devDependencies:
+  '@types/sortablejs': 1.13.0
   prettier: 2.7.1
   rollup: 2.77.2
   rollup-preset-solid: 1.4.0
@@ -1430,6 +1436,10 @@ packages:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
       '@types/node': 16.11.4
+    dev: true
+
+  /@types/sortablejs/1.13.0:
+    resolution: {integrity: sha512-C3064MH72iEfeGCYEGCt7FCxXoAXaMPG0QPnstcxvPmbl54erpISu06d++FY37Smja64iWy5L8wOyHHBghWbJQ==}
     dev: true
 
   /abbrev/1.1.1:
@@ -2991,6 +3001,10 @@ packages:
       '@babel/types': 7.18.9
       solid-js: 1.4.8
     dev: true
+
+  /sortablejs/1.15.0:
+    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
+    dev: false
 
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
