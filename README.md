@@ -4,7 +4,8 @@
 
 # Solid SortableJS
 
-Easily sort your list. solid-sortablejs is using the SortableJS library to sort your list.
+Easily sort your list. solid-sortablejs is using the SortableJS library to sort your list.  
+This library is in WIP
 
 
 ## Quick start
