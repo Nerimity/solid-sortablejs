@@ -1,30 +1,35 @@
-import type { Component } from "solid-js";
-import logo from "./logo.svg";
-import styles from "./App.module.css";
-import { Hello } from "../src";
+import Sortable, { SortableOnEndEvent } from "../src";
+import {createStore} from 'solid-js/store'
 
-const App: Component = () => {
+const App = () => {
+
+  const itemStyles = {background: 'green', padding: "10px", minWidth: "100px", margin: "5px", "border-radius": "4px", color: "white"};
+  const containerStyles = {display: "inline-block", background: 'gray', padding: "10px", "border-radius": "4px"};
+
+  const [items, setItems] = createStore([
+    { id: 0, name: 0 },
+    { id: 1, name: 1 },
+    { id: 2, name: 2 },
+    { id: 3, name: 3 },
+  ])
+
+  const onEnd = (event: SortableOnEndEvent<typeof items[0]>) => {
+    // event.movedItem -> the item that was moved
+    // event.newList -> the new list of items
+    // event.oldIndex -> the index of the item that was moved
+    // event.newIndex -> the index of the item that was moved to
+
+    setItems(event.newList);
+  }
+
   return (
-    <div class={styles.App}>
-      <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
-        <h1>
-          <Hello></Hello>
-        </h1>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          class={styles.link}
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Solid
-        </a>
-      </header>
+    <div style={containerStyles}>
+      <Sortable items={items} onEnd={onEnd}>
+        {item => <div style={itemStyles}>{item.name} {Math.random()}</div>}
+      </Sortable>
     </div>
   );
+
 };
 
 export default App;

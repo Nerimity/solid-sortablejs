@@ -1,36 +1,56 @@
 <p>
-  <img width="100%" src="https://assets.solidjs.com/banner?type={{name_of_lib}}&background=tiles&project=%20" alt="{{name_of_lib}}">
+  <img width="100%" src="https://assets.solidjs.com/banner?type=solid-sortablejs&background=tiles&project=%20" alt="solid-sortablejs">
 </p>
 
 # {{name_of_lib}}
 
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg?style=for-the-badge&logo=pnpm)](https://pnpm.io/)
 
-{{desc_of_lib}}
+Easily sort your list. solid-sortablejs is using the SortableJS library to sort your list.
 
-> **Note** After using this template, you have to search and replace all `{{name_of_lib}}` and similar strings
-> with appropriate texts.
->
-> `{{name_of_lib}}` should be a **kebab-case** string representing the name of you monorepo.
->
-> `{{desc_of_lib}}` should be a **Normal case** string with the description of the repository.
->
-> `{{me}}` should be a **kebab-case** string from your profile URL.
 
 ## Quick start
 
 Install it:
 
 ```bash
-npm i {{name_of_lib}}
-# or
-yarn add {{name_of_lib}}
-# or
-pnpm add {{name_of_lib}}
+npm add solid-sortablejs
 ```
 
 Use it:
 
 ```tsx
-import {{name_of_lib}} from '{{name_of_lib}}'
+import {createStore} from 'solid-js/store'
+import Sortable from 'solid-sortablejs'
+
+const App = () => {
+
+  const itemStyles = {background: 'green', padding: "10px", minWidth: "100px", margin: "5px", "border-radius": "4px", color: "white"};
+  const containerStyles = {display: "inline-block", background: 'gray', padding: "10px", "border-radius": "4px"};
+
+  const [items, setItems] = createStore([
+    { id: 0, name: 0 },
+    { id: 1, name: 1 },
+    { id: 2, name: 2 },
+    { id: 3, name: 3 },
+  ])
+
+  const onEnd = (event: SortableOnEndEvent<typeof items[0]>) => {
+    // event.movedItem -> the item that was moved
+    // event.newList -> the new list of items
+    // event.oldIndex -> the index of the item that was moved
+    // event.newIndex -> the index of the item that was moved to
+
+    setItems(event.newList);
+  }
+
+  return (
+    <div style={containerStyles}>
+      <Sortable items={items} onEnd={onEnd}>
+        {item => <div style={itemStyles}>{item.name} {Math.random()}</div>}
+      </Sortable>
+    </div>
+  );
+
+};
 ```
