@@ -1,52 +1,86 @@
-import {For, JSX, onMount} from 'solid-js';
+import {createContext, For, JSX, JSXElement, onCleanup, onMount, Setter} from 'solid-js';
 import SortableJs from 'sortablejs';
 
 
 
-export interface SortableOnEndEvent<T> {
-  newList: T[];
-  oldIndex: number;
-  newIndex: number;
-  movedItem: T
-}
 
 interface SortableProps<T> {
+  class?: string;
+  style?: JSX.CSSProperties;
   items: T[]
-  children: (item: T) => JSX.Element;
-  onEnd: (event: SortableOnEndEvent<T>) => void; 
+  idField: keyof T;
+  setItems: Setter<T[]>
+  children: (item: T) => JSXElement
 }
 
-export default function Sortable<T>(props: SortableProps<T>) {
 
-  let listContainerEl: HTMLDivElement | undefined = undefined;
 
-  onMount(() => {
-    const sortable = new SortableJs(listContainerEl!, {
-      animation: 150,
-      onEnd: (event) => {
-        const oldIndex = event.oldIndex!;
-        const newIndex = event.newIndex!;
+const SortableContext = createContext();
 
-        sortable.sort(props.items.map((_i, index) => index.toString()));
 
-        const items = [...props.items];
-        const element = items.splice(oldIndex, 1)[0];
-        items.splice(newIndex, 0, element);
-        props.onEnd({
-          newList: items,
-          oldIndex,
-          newIndex,
-          movedItem: element
-        });
-      }
-    });
-  })
+export function SortableProvider (props: {children: JSXElement}) {
+  const itemMap: Record<string, string> = {};
 
+  const sortable = {
+    itemMap,
+    add() {
+    }
+  }
 
   return (
-    <div class='sortable-container' ref={listContainerEl}>
+    <SortableContext.Provider value={{}}>
+      {props.children}
+    </SortableContext.Provider>
+  )
+}
+
+
+const dragging = {
+  item: undefined as any
+}
+export default function Sortable<T>(props: SortableProps<T>) {
+  let sortableContainerRef: HTMLDivElement | undefined;
+
+  onMount(() => {
+    const sortable = SortableJs.create(sortableContainerRef!, {
+      group: "test",
+      animation: 150,
+      onStart(event) {
+        dragging.item = props.items[parseInt(event.item.dataset.index!)];
+        
+      },
+      onAdd(evt) {
+        const children = [...evt.to?.children!] as HTMLSpanElement[];
+        const newItems = children.map(v => props.items.find(item => item[props.idField].toString() === v.dataset.id!) || dragging.item);
+
+
+        // from: where it came from
+        // to:   added to
+
+        children.splice(evt.newIndex!, 1);
+        evt.to?.replaceChildren(...children)
+        props.setItems(newItems);
+
+      },
+      onEnd(evt) {
+        const children = [...sortableContainerRef?.children!] as HTMLSpanElement[];
+        const newItems = children.map(v => props.items.find(item => item[props.idField].toString() === v.dataset.id!));
+        children.sort((a, b) => parseInt(a.dataset.index!) - parseInt(b.dataset.index!))
+        sortableContainerRef?.replaceChildren(...children);
+        props.setItems(newItems);
+        dragging.item = undefined;
+      },
+    })
+
+    onCleanup(() => {
+      sortable.destroy();
+    })
+  })
+
+  return (
+    <div style={props.style} ref={sortableContainerRef} class="sortablejs">
       <For each={props.items}>
-        {(item, index) => <div data-id={index()} >{props.children(item)}</div>}
+        {(item, i) => <div data-id={item[props.idField]} data-index={i()}>{props.children(item)}</div>}
       </For>
     </div>
   )
