@@ -11,6 +11,7 @@ interface SortableProps<T> {
   idField: keyof T;
   setItems: Setter<T[]>;
   children: (item: T) => JSXElement;
+  onEnd?: (event: SortableJs.SortableEvent) => void;
 }
 
 const dragging = {
@@ -64,6 +65,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
         sortableContainerRef?.replaceChildren(...children);
         props.setItems(newItems as T[]);
         dragging.item = undefined;
+        props.onEnd?.(evt);
       },
     });
 
