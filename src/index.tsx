@@ -75,7 +75,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
   });
 
   return (
-    <div style={props.style} ref={sortableContainerRef} class="sortablejs">
+    <div style={props.style} ref={sortableContainerRef} class={"sortablejs" + props.class ? ` ${props.class}` : ''}>
       <For each={props.items}>
         {(item, i) => (
           <div data-id={item[props.idField]} data-index={i()}>
