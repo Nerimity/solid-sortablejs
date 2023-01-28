@@ -12,6 +12,7 @@ interface SortableProps<T> {
   setItems: Setter<T[]>;
   children: (item: T) => JSXElement;
   onEnd?: (event: SortableJs.SortableEvent) => void;
+  onStart?: (event: SortableJs.SortableEvent) => void;
 }
 
 const dragging = {
@@ -28,6 +29,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
       animation: 150,
       onStart(event) {
         dragging.item = props.items[parseInt(event.item.dataset.index!)];
+        props.onStart?.(event);
       },
       onAdd(evt) {
         const children = [...evt.to?.children!] as HTMLSpanElement[];
