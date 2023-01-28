@@ -31,8 +31,8 @@ export default function Sortable<T>(props: SortableProps<T>) {
         dragging.item = props.items[parseInt(event.item.dataset.index!)];
         props.onStart?.(event);
       },
-      onAdd(evt) {
-        const children = [...evt.to?.children!] as HTMLSpanElement[];
+      onAdd(event) {
+        const children = [...event.to?.children!] as HTMLSpanElement[];
         const newItems = children.map(
           (v) =>
             props.items.find(
@@ -41,24 +41,24 @@ export default function Sortable<T>(props: SortableProps<T>) {
         );
         // from: where it came from
         // to:   added to
-        children.splice(evt.newIndex!, 1);
-        evt.to?.replaceChildren(...children);
+        children.splice(event.newIndex!, 1);
+        event.to?.replaceChildren(...children);
 
         props.setItems(newItems as T[]);
       },
-      onRemove(evt) {
+      onRemove(event) {
         // from: where it removed from
         // to: where it added to
-        const children = [...evt.from?.children!] as HTMLSpanElement[];
+        const children = [...event.from?.children!] as HTMLSpanElement[];
         const newItems = children.map((v) =>
           props.items.find((item) => (item[props.idField] as string).toString() === v.dataset.id!),
         );
 
-        children.splice(evt.oldIndex!, 0, evt.item);
-        evt.from.replaceChildren(...children);
+        children.splice(event.oldIndex!, 0, event.item);
+        event.from.replaceChildren(...children);
         props.setItems(newItems as T[]);
       },
-      onEnd(evt) {
+      onEnd(event) {
         const children = [...sortableContainerRef?.children!] as HTMLSpanElement[];
         const newItems = children.map((v) =>
           props.items.find((item) => (item[props.idField] as string).toString() === v.dataset.id!),
@@ -67,7 +67,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
         sortableContainerRef?.replaceChildren(...children);
         props.setItems(newItems as T[]);
         dragging.item = undefined;
-        props.onEnd?.(evt);
+        props.onEnd?.(event);
       },
     });
 
