@@ -19,14 +19,13 @@ npm install solid-sortablejs
 Use it:
 
 ```tsx
-import Sortable from "../src";
-import {createStore} from 'solid-js/store'
+import Sortable from "solid-sortablejs";
+import {createStore} from "solid-js/store";
 import { JSX } from "solid-js";
 
 const App = () => {
-
-  const itemStyles: JSX.CSSProperties = {"user-select": "none", background: 'green', padding: "10px", "min-width": "100px", margin: "5px", "border-radius": "4px", color: "white"};
-  const containerStyles = {display: "inline-block", background: 'gray', padding: "10px", "border-radius": "4px"};
+  const itemStyles: JSX.CSSProperties = {"user-select": "none", background: "green", padding: "10px", "min-width": "100px", margin: "5px", "border-radius": "4px", color: "white"};
+  const containerStyles = {display: "inline-block", background: "gray", padding: "10px", "border-radius": "4px"};
 
   const [items, setItems] = createStore([
     { id: 0, name: 0 },
@@ -42,9 +41,5 @@ const App = () => {
       </Sortable>
     </div>
   );
-
-};
-
-export default App;
 };
 ```
