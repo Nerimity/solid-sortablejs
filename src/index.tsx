@@ -35,6 +35,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
         props.onStart?.(event);
       },
       onAdd(event) {
+        props.onAdd?.(event)
         const children = [...event.to?.children!] as HTMLSpanElement[];
         const newItems = children.map(
           (v) =>
@@ -47,10 +48,10 @@ export default function Sortable<T>(props: SortableProps<T>) {
         children.splice(event.newIndex!, 1);
         event.to?.replaceChildren(...children);
         
-        props.onAdd?.(event)
         props.setItems(newItems as T[]);
       },
       onRemove(event) {
+        props.onRemove?.(event);
         // from: where it removed from
         // to: where it added to
         const children = [...event.from?.children!] as HTMLSpanElement[];
@@ -60,7 +61,6 @@ export default function Sortable<T>(props: SortableProps<T>) {
 
         children.splice(event.oldIndex!, 0, event.item);
         event.from.replaceChildren(...children);
-        props.onRemove?.(event);
         props.setItems(newItems as T[]);
       },
       onEnd(event) {
