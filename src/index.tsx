@@ -1,6 +1,7 @@
 import { createContext, For, JSX, JSXElement, onCleanup, onMount, Setter } from "solid-js";
 import SortableJs from "sortablejs";
 
+export type SortableEvent = SortableJs.SortableEvent
 interface SortableProps<T> {
   delay?: number;
   delayOnTouchOnly?: boolean;
@@ -35,7 +36,6 @@ export default function Sortable<T>(props: SortableProps<T>) {
         props.onStart?.(event);
       },
       onAdd(event) {
-        props.onAdd?.(event)
         const children = [...event.to?.children!] as HTMLSpanElement[];
         const newItems = children.map(
           (v) =>
@@ -47,7 +47,8 @@ export default function Sortable<T>(props: SortableProps<T>) {
         // to:   added to
         children.splice(event.newIndex!, 1);
         event.to?.replaceChildren(...children);
-        
+
+        props.onAdd?.(event)
         props.setItems(newItems as T[]);
       },
       onRemove(event) {
@@ -82,7 +83,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
   });
 
   return (
-    <div {...(props.id ? {id: props.id} : undefined)} style={props.style} ref={sortableContainerRef} class={"sortablejs" + (props.class ? ` ${props.class}` : '')}>
+    <div {...(props.id ? { id: props.id } : undefined)} style={props.style} ref={sortableContainerRef} class={"sortablejs" + (props.class ? ` ${props.class}` : '')}>
       <For each={props.items}>
         {(item, i) => (
           <div data-id={item[props.idField]} data-index={i()}>
