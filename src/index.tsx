@@ -13,6 +13,9 @@ interface SortableProps<T> {
   children: (item: T) => JSXElement;
   onEnd?: (event: SortableJs.SortableEvent) => void;
   onStart?: (event: SortableJs.SortableEvent) => void;
+  onRemove?: (event: SortableJs.SortableEvent) => void;
+  onAdd?: (event: SortableJs.SortableEvent) => void;
+  id?: string;
 }
 
 const dragging = {
@@ -43,7 +46,8 @@ export default function Sortable<T>(props: SortableProps<T>) {
         // to:   added to
         children.splice(event.newIndex!, 1);
         event.to?.replaceChildren(...children);
-
+        
+        props.onAdd?.(event)
         props.setItems(newItems as T[]);
       },
       onRemove(event) {
@@ -56,6 +60,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
 
         children.splice(event.oldIndex!, 0, event.item);
         event.from.replaceChildren(...children);
+        props.onRemove?.(event);
         props.setItems(newItems as T[]);
       },
       onEnd(event) {
@@ -77,7 +82,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
   });
 
   return (
-    <div style={props.style} ref={sortableContainerRef} class={"sortablejs" + props.class ? ` ${props.class}` : ''}>
+    <div {...(props.id ? {id: props.id} : undefined)} style={props.style} ref={sortableContainerRef} class={"sortablejs" + (props.class ? ` ${props.class}` : '')}>
       <For each={props.items}>
         {(item, i) => (
           <div data-id={item[props.idField]} data-index={i()}>
