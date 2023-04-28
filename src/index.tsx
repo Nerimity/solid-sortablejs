@@ -52,16 +52,16 @@ export default function Sortable<T>(props: SortableProps<T>) {
         props.setItems(newItems as T[]);
       },
       onRemove(event) {
-        props.onRemove?.(event);
         // from: where it removed from
         // to: where it added to
         const children = [...event.from?.children!] as HTMLSpanElement[];
         const newItems = children.map((v) =>
-          props.items.find((item) => (item[props.idField] as string).toString() === v.dataset.id!),
+        props.items.find((item) => (item[props.idField] as string).toString() === v.dataset.id!),
         );
-
+        
         children.splice(event.oldIndex!, 0, event.item);
         event.from.replaceChildren(...children);
+        props.onRemove?.(event);
         props.setItems(newItems as T[]);
       },
       onEnd(event) {
