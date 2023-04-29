@@ -6,6 +6,7 @@ interface SortableProps<T> {
   delay?: number;
   delayOnTouchOnly?: boolean;
   group?: string;
+  filter?: string;
   class?: string;
   style?: JSX.CSSProperties;
   items: T[];
@@ -16,6 +17,7 @@ interface SortableProps<T> {
   onStart?: (event: SortableJs.SortableEvent) => void;
   onRemove?: (event: SortableJs.SortableEvent) => void;
   onAdd?: (event: SortableJs.SortableEvent) => void;
+  onMove?: ((evt: SortableJs.MoveEvent, originalEvent: Event) => boolean | void | 1 | -1) | undefined
   id?: string;
 }
 
@@ -30,6 +32,8 @@ export default function Sortable<T>(props: SortableProps<T>) {
       delay: props.delay,
       delayOnTouchOnly: props.delayOnTouchOnly,
       group: props.group,
+      filter: props.filter,
+      onMove: props.onMove,
       animation: 150,
       onStart(event) {
         dragging.item = props.items[parseInt(event.item.dataset.index!)];
