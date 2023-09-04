@@ -1,9 +1,10 @@
-import { createContext, For, JSX, JSXElement, onCleanup, onMount, Setter } from "solid-js";
+import { createEffect, For, JSX, JSXElement, onCleanup, onMount, Setter } from "solid-js";
 import SortableJs from "sortablejs";
 
 export type SortableEvent = SortableJs.SortableEvent
 interface SortableProps<T> {
   delay?: number;
+  disabled?: boolean;
   delayOnTouchOnly?: boolean;
   group?: string;
   filter?: string;
@@ -26,11 +27,12 @@ const dragging = {
 };
 export default function Sortable<T>(props: SortableProps<T>) {
   let sortableContainerRef: HTMLDivElement | undefined;
+  let sortable: SortableJs
 
-  const {items, setItems, ...otherProps} = props
+  const { items, setItems, ...otherProps } = props
 
   onMount(() => {
-    const sortable = SortableJs.create(sortableContainerRef!, {
+    sortable = SortableJs.create(sortableContainerRef!, {
       ...otherProps,
       animation: 150,
       onStart(event) {
@@ -58,7 +60,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
         // to: where it added to
         const children = [...event.from?.children!] as HTMLSpanElement[];
         const newItems = children.map((v) =>
-        props.items.find((item) => (item[props.idField] as string).toString() === v.dataset.id!),
+          props.items.find((item) => (item[props.idField] as string).toString() === v.dataset.id!),
         );
         
         children.splice(event.oldIndex!, 0, event.item);
@@ -83,6 +85,20 @@ export default function Sortable<T>(props: SortableProps<T>) {
       sortable.destroy();
     });
   });
+
+  createEffect<SortableProps<T> | null>((prev) => {
+    const clonedProps = { ...props }
+    if (!prev) {
+      //console.debug('props init', clonedProps)
+    } else {
+      const diff = Object.entries(clonedProps).filter(([key, newVal]) => newVal != prev[key])
+      //console.debug('props update', diff, { newProps: clonedProps, prev })
+      for (const [key, newVal] of diff) {
+        sortable.option(key, newVal)
+      }
+    }
+    return clonedProps
+  }, null);
 
   return (
     <div {...(props.id ? { id: props.id } : undefined)} style={props.style} ref={sortableContainerRef} class={"sortablejs" + (props.class ? ` ${props.class}` : '')}>
