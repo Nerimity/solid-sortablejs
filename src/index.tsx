@@ -27,13 +27,11 @@ const dragging = {
 export default function Sortable<T>(props: SortableProps<T>) {
   let sortableContainerRef: HTMLDivElement | undefined;
 
+  const {items, setItems, ...otherProps} = props
+
   onMount(() => {
     const sortable = SortableJs.create(sortableContainerRef!, {
-      delay: props.delay,
-      delayOnTouchOnly: props.delayOnTouchOnly,
-      group: props.group,
-      filter: props.filter,
-      onMove: props.onMove,
+      ...otherProps,
       animation: 150,
       onStart(event) {
         dragging.item = props.items[parseInt(event.item.dataset.index!)];
