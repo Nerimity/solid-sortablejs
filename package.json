@@ -52,7 +52,7 @@
   "devDependencies": {
     "@types/sortablejs": "^1.15.0",
     "prettier": "2.8.3",
-    "rollup": "^3.10.1",
+    "rollup": "^3.28.1",
     "rollup-preset-solid": "^2.0.1",
     "solid-js": "^1.6.9",
     "taze": "^0.8.5",
