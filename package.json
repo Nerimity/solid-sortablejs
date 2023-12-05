@@ -44,13 +44,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@types/sortablejs": "^1.15.0",
     "sortablejs": "^1.15.0"
   },
   "peerDependencies": {
     "solid-js": ">=1.0.0"
   },
   "devDependencies": {
-    "@types/sortablejs": "^1.15.0",
     "prettier": "2.8.3",
     "rollup": "^3.28.1",
     "rollup-preset-solid": "^2.0.1",
