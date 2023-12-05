@@ -5,14 +5,14 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@types/sortablejs':
+    specifier: ^1.15.0
+    version: 1.15.0
   sortablejs:
     specifier: ^1.15.0
     version: 1.15.0
 
 devDependencies:
-  '@types/sortablejs':
-    specifier: ^1.15.0
-    version: 1.15.0
   prettier:
     specifier: 2.8.3
     version: 2.8.3
@@ -1688,7 +1688,7 @@ packages:
 
   /@types/sortablejs@1.15.0:
     resolution: {integrity: sha512-qrhtM7M41EhH4tZQTNw2/RJkxllBx3reiJpTbgWCM2Dx0U1sZ6LwKp9lfNln9uqE26ZMKUaPEYaD4rzvOWYtZw==}
-    dev: true
+    dev: false
 
   /abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
