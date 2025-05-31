@@ -35,8 +35,8 @@ export default function Sortable<T>(props: SortableProps<T>) {
 
   onMount(() => {
     sortable = SortableJs.create(sortableContainerRef!, {
-      ...options,
       animation: 150,
+      ...options,
       onStart(event) {
         dragging.item = ourProps.items[parseInt(event.item.dataset.index!)];
         options.onStart?.(event);
