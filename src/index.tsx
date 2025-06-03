@@ -13,7 +13,7 @@ import SortableJs from "sortablejs";
 export type SortableEvent = SortableJs.SortableEvent;
 interface SortableProps<T> extends SortableJs.Options {
   items: T[];
-  setItems: Setter<T[]>;
+  setItems: (items: T[], event: SortableEvent) => void;
   idField: keyof T;
   class?: string;
   style?: JSX.CSSProperties;
@@ -112,7 +112,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
         children.splice(event.newIndex!, 1);
         event.to?.replaceChildren(...children);
 
-        ourProps.setItems(newItems as T[]);
+        ourProps.setItems(newItems as T[], event);
         options.onAdd?.(event);
       },
       onRemove(event) {
@@ -128,7 +128,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
 
         children.splice(event.oldIndex!, 0, event.item);
         event.from.replaceChildren(...children);
-        ourProps.setItems(newItems as T[]);
+        ourProps.setItems(newItems as T[], event);
         options.onRemove?.(event);
       },
       onEnd(event) {
@@ -145,7 +145,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
           (a, b) => parseInt(a.dataset.index!) - parseInt(b.dataset.index!)
         );
         sortableContainerRef?.replaceChildren(...children);
-        ourProps.setItems(newItems as T[]);
+        ourProps.setItems(newItems as T[], event);
         dragging.item = undefined;
         options.onEnd?.(event);
       },
