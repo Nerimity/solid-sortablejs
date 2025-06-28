@@ -4,18 +4,13 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  sortablejs@1.15.6:
-    hash: ybc3nwxccwga4zwm3v26bkgfle
-    path: patches/sortablejs@1.15.6.patch
-
 importers:
 
   .:
     dependencies:
       sortablejs:
         specifier: ^1.15.6
-        version: 1.15.6(patch_hash=ybc3nwxccwga4zwm3v26bkgfle)
+        version: 1.15.6
     devDependencies:
       '@types/node':
         specifier: ^20.17.57
@@ -3758,7 +3753,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  sortablejs@1.15.6(patch_hash=ybc3nwxccwga4zwm3v26bkgfle): {}
+  sortablejs@1.15.6: {}
 
   source-map-js@1.2.1: {}
 
