@@ -1,5 +1,5 @@
 import Sortable from "../src";
-import { createStore } from "solid-js/store";
+import { createStore, reconcile } from "solid-js/store";
 import { JSX } from "solid-js";
 
 const App = () => {
@@ -39,7 +39,7 @@ const App = () => {
         idField="id"
         style={{ "min-height": "30px", background: "darkgray" }}
         items={items}
-        setItems={setItems}
+        setItems={(items) => setItems(reconcile(items))}
       >
         {(item) => (
           <div style={itemStyles}>
@@ -50,9 +50,13 @@ const App = () => {
       <Sortable
         group="test"
         idField="id"
-        style={{ "min-height": "30px", background: "darkgray", "margin-top": "102px" }}
+        style={{
+          "min-height": "30px",
+          background: "darkgray",
+          "margin-top": "102px",
+        }}
         items={items2}
-        setItems={setItems2}
+        setItems={(items) => setItems2(reconcile(items))}
       >
         {(item) => (
           <div style={itemStyles}>

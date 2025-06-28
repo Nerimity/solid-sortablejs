@@ -79,5 +79,10 @@
   },
   "dependencies": {
     "sortablejs": "^1.15.6"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "sortablejs@1.15.6": "patches/sortablejs@1.15.6.patch"
+    }
   }
 }

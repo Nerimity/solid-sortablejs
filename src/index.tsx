@@ -200,6 +200,7 @@ export default function Sortable<T>(props: SortableProps<T>) {
       id={props.id}
       ref={sortableContainerRef}
       class={"sortablejs" + (ourProps.class ? ` ${ourProps.class}` : "")}
+      style={ourProps.style}
     >
       <For each={ourProps.items}>
         {(item, i) => (
