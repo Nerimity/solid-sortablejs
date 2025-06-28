@@ -43,7 +43,7 @@
   "scripts": {
     "dev": "vite serve dev",
     "build": "tsup",
-    "prepublishOnly": "npm build",
+    "prepublishOnly": "tsup",
     "postinstall": "patch-package"
   },
   "peerDependencies": {
