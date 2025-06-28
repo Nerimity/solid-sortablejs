@@ -1,5 +1,5 @@
 {
-  "version": "2.1.7",
+  "version": "2.1.8",
   "name": "solid-sortablejs",
   "description": "A sortable library for solid",
   "license": "MIT",
@@ -79,10 +79,5 @@
   },
   "dependencies": {
     "sortablejs": "^1.15.6"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "sortablejs@1.15.6": "patches/sortablejs@1.15.6.patch"
-    }
   }
 }
