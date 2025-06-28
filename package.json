@@ -43,8 +43,7 @@
   "scripts": {
     "dev": "vite serve dev",
     "build": "tsup",
-    "prepublishOnly": "npm build",
-    "postinstall": "patch-package"
+    "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
     "solid-js": "^1.6.0"
@@ -61,7 +60,6 @@
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-no-only-tests": "^3.3.0",
     "jsdom": "^24.1.3",
-    "patch-package": "^8.0.0",
     "prettier": "3.0.0",
     "solid-js": "^1.9.7",
     "tsup": "^8.5.0",
@@ -74,10 +72,17 @@
   "keywords": [
     "solid"
   ],
+  "packageManager": "pnpm@9.1.1",
   "engines": {
-    "node": ">=18"
+    "node": ">=18",
+    "pnpm": ">=9.0.0"
   },
   "dependencies": {
     "sortablejs": "^1.15.6"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "sortablejs@1.15.6": "patches/sortablejs@1.15.6.patch"
+    }
   }
 }
