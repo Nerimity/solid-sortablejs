@@ -1,7 +1,7 @@
-diff --git a/modular/sortable.esm.js b/modular/sortable.esm.js
-index 1adf24dd2c375ef6b655d3effbde01d62dc2d9d7..d8519b78421f33b9df1b42ac5e8a6d184cfb2a2c 100644
---- a/modular/sortable.esm.js
-+++ b/modular/sortable.esm.js
+diff --git a/node_modules/sortablejs/modular/sortable.esm.js b/node_modules/sortablejs/modular/sortable.esm.js
+index 824d481..d8519b7 100644
+--- a/node_modules/sortablejs/modular/sortable.esm.js
++++ b/node_modules/sortablejs/modular/sortable.esm.js
 @@ -896,7 +896,6 @@ var dragEl,
    activeGroup,
    putSortable,
